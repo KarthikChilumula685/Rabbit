@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";   // ⭐ add this
+import { Link, useNavigate } from "react-router-dom"; // ⭐ add this
 
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
+  const navigation = useNavigate();
 
   useEffect(() => {
     // Simulate fetching orders
@@ -39,6 +40,10 @@ const MyOrdersPage = () => {
     }, 1000);
   }, []);
 
+  const handleRowClick = (orderId) => {
+    Navigate(`/order/${orderId}`);
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
       <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800">
@@ -65,6 +70,7 @@ const MyOrdersPage = () => {
               orders.map((order) => (
                 <tr
                   key={order._id}
+                  onClick={() => handleRowClick(order._id)}
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="py-3 px-4">
@@ -105,7 +111,7 @@ const MyOrdersPage = () => {
                   </td>
                   <td className="py-3 px-4">
                     <Link
-                      to={`/order/${order._id}`}   // ⭐ absolute, matches route
+                      to={`/order/${order._id}`} // ⭐ absolute, matches route
                       className="text-blue-500 hover:underline text-xs sm:text-sm"
                     >
                       View Details
