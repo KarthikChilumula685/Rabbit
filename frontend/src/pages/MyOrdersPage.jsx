@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";   // ⭐ add this
 
 const MyOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -40,7 +41,9 @@ const MyOrdersPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800">My Orders</h2>
+      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800">
+        My Orders
+      </h2>
 
       {/* Responsive table wrapper */}
       <div className="overflow-x-auto bg-white shadow-md sm:rounded-lg">
@@ -54,6 +57,7 @@ const MyOrdersPage = () => {
               <th className="py-3 px-4">Items</th>
               <th className="py-3 px-4">Price</th>
               <th className="py-3 px-4">Status</th>
+              <th className="py-3 px-4">Action</th> {/* ⭐ new column */}
             </tr>
           </thead>
           <tbody>
@@ -99,12 +103,20 @@ const MyOrdersPage = () => {
                       {order.isPaid ? "Paid" : "Pending"}
                     </span>
                   </td>
+                  <td className="py-3 px-4">
+                    <Link
+                      to={`/order/${order._id}`}   // ⭐ absolute, matches route
+                      className="text-blue-500 hover:underline text-xs sm:text-sm"
+                    >
+                      View Details
+                    </Link>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={8}
                   className="py-6 px-4 text-center text-gray-500 text-sm"
                 >
                   You have no orders
