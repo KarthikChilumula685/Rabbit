@@ -19,6 +19,10 @@ const checkoutItemSchema = new Schema(
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: false,
+    }
   },
   { _id: false }
 );

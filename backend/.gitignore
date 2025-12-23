@@ -1,18 +1,14 @@
 # ===============================
-# Dependencies
+# Dependencies (ABSOLUTELY IGNORE)
 # ===============================
 node_modules/
-.pnp/
-.pnp.js
 
 # ===============================
 # Environment variables
 # ===============================
 .env
-.env.local
-.env.development
-.env.test
-.env.production
+.env.*
+!.env.example
 
 # ===============================
 # Logs
@@ -30,15 +26,17 @@ build/
 out/
 
 # ===============================
-# Vite specific
+# Vite / tooling
 # ===============================
 .vite/
-
-# ===============================
-# Cache
-# ===============================
 .cache/
 .eslintcache
+
+# ===============================
+# Uploads / temp files
+# ===============================
+uploads/
+tmp/
 
 # ===============================
 # OS files
@@ -55,13 +53,16 @@ Thumbs.db
 *.swo
 
 # ===============================
-# Coverage reports
+# Coverage
 # ===============================
 coverage/
 
 # ===============================
-# Optional: lock files (keep ONE, ignore others)
+# Local databases
 # ===============================
-# yarn.lock
-# package-lock.json
-# pnpm-lock.yaml
+*.sqlite
+*.sqlite3
+
+# ===============================
+# Lock files (npm user)
+# =============================
