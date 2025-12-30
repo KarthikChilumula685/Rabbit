@@ -1,7 +1,8 @@
-import express, { json } from "express";
+import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
 import connectDB from "./config/db.js";
+
 import userRoutes from "./routes/userRoute.js";
 import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
@@ -13,46 +14,50 @@ import adminRoutes from "./routes/adminRoutes.js";
 import productAdminRoutes from "./routes/productAdminRoutes.js";
 import adminOrderRoutes from "./routes/adminOrderRoutes.js";
 
+/* =====================
+   ENV CONFIG (TOP)
+===================== */
+config();
+
+/* =====================
+   APP INIT
+===================== */
 const app = express();
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://rabbit-n685.vercel.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
-
-// app.use(cors());
-// app.use(json();
-
+/* =====================
+   MIDDLEWARES
+===================== */
 app.use(express.json());
+
 app.use(
   cors({
     origin: [
-      "https://rabbit-n685.vercel.app", // frontend
+      "http://localhost:5173",
+      "https://rabbit-n685.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
 
-config();
+// ✅ REQUIRED FOR PREFLIGHT REQUESTS
 
-const port = process.env.PORT || 3000;
 
-//connect to mongoDB
+/* =====================
+   DATABASE
+===================== */
 connectDB();
 
+/* =====================
+   HEALTH CHECK
+===================== */
 app.get("/", (req, res) => {
-  res.send("WELCOME TO RABBIT API!");
+  res.status(200).send("WELCOME TO RABBIT API!");
 });
 
-//API Routes
+/* =====================
+   ROUTES
+===================== */
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
@@ -66,6 +71,7 @@ app.use("/api/admin/users", adminRoutes);
 app.use("/api/admin/products", productAdminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+/* =====================
+   EXPORT (IMPORTANT)
+===================== */
+export default app;
